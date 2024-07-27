@@ -1,5 +1,5 @@
-import FlightsList from "../components/flights-list";
-import Search from "../components/search";
+import FlightsList from "../components/flights-list/flights-list";
+import Search from "../components/search/search";
 
 export default function FlightResults() {
   return (

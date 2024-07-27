@@ -34,7 +34,7 @@ export default function useFlightsState(): FlightsStateProps {
   }
 
   return {
-    items,
+    airports: items,
     isLoading,
     parameters,
     flights,

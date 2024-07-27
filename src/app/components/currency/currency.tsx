@@ -5,6 +5,10 @@ export interface CurrencyProps {
 }
 
 export default function Currency({ className, amount, fallbackValue = '' }: CurrencyProps) {
-    const currencyText = amount ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount) : fallbackValue;
+    const currencyText = amount ? getAmountInINR(amount) : fallbackValue;
     return <span className={className}>{currencyText}</span>;
+}
+
+export function getAmountInINR(amount: number): string {
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
 }
