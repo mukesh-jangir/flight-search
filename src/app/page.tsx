@@ -1,7 +1,7 @@
-import Image from "next/image";
+import Search from "./components/search";
 
 export default function Home() {
   return (
-    <h2 className="text-8xl">Hello World!</h2>
+    <Search></Search>
   );
 }
