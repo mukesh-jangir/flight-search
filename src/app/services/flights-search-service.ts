@@ -25,8 +25,6 @@ export async function getFlights(params: FlightParameters): Promise<FlightSearch
     }
   });
 
-  console.log(apiParams);
-
   return getJson({
     api_key: process.env.REACT_APP_SERP_API_KEY,
     engine: "google_flights",

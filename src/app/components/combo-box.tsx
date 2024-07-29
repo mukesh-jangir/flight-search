@@ -14,17 +14,6 @@ export interface ComboboxProps<T> {
   label?: string;
 }
 
-// const codes: DropdownItem<AirortCodes>[] = [
-//   {
-//     label: 'Chennai',
-//     value: AirortCodes.Chennai
-//   },
-//   {
-//     label: 'Jaipur',
-//     value: AirortCodes.Jaipur
-//   }
-// ];
-
 export default function Combobox<T>({items, label, value, setValue}: ComboboxProps<T>) {
   const [open, setOpen] = useState(false);
 

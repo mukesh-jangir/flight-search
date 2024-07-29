@@ -1,0 +1,11 @@
+.header-value-container {
+  @apply grid gap-0 justify-items-center;
+
+  span:first-child {
+    @apply text-xs;
+  }
+
+  span:not(:first-child) {
+    @apply text-lg font-bold;
+  }
+}

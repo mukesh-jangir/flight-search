@@ -1,3 +1,5 @@
+import { DropdownItem } from "./dropdown-item";
+
 export enum TravelType {
   RoundTrip = '1',
   OneWay = '2'
@@ -64,4 +66,18 @@ export interface FlightSearchInfo {
 export interface FlightSearchResponse {
   bestFlights: FlightSearchInfo[];
   otherFlights: FlightSearchInfo[];
+}
+
+export interface FlightsStateProps {
+  items: DropdownItem<string>[];
+  isLoading: boolean;
+  parameters: FlightParameters;
+  flights: FlightSearchInfo[],
+  setFrom: (value: string) => void,
+  setTo: (value: string) => void,
+  setDepartureDate: (value: Date) => void,
+  setReturnDate: (value: Date) => void,
+  setTravelType: (value: TravelType) => void,
+  setTravellersIfo: (value: FlightTravellersParameters) => void,
+  fetchFlights: () => void
 }

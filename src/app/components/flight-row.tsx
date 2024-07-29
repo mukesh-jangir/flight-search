@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { AirportDepartArrival, FlightInfo, FlightSearchInfo } from "../models/flight-parameters";
 import { Card } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
+import './flight-row.css';
 
 export default function FlightRow(props: FlightSearchInfo) {
   const airlines = props.flights.map(x => x.airline);
@@ -39,9 +39,9 @@ export default function FlightRow(props: FlightSearchInfo) {
       <section className="grid gap-3 align-bottom grid-cols-5 items-end justify-items-center">
         {getAirpotInfo(props.flights[0].departure_airport)}
 
-        <div className="grid gap-0 justify-items-center">
-          <span className="text-xs">{props.flights.length > 1 && getMiddleAiportsInfoText(props.flights)}</span>
-          <span className="text-lg font-bold">{getHourAndMinuteText(props.total_duration)}</span>
+        <div className="header-value-container">
+          <span>{props.flights.length > 1 && getMiddleAiportsInfoText(props.flights)}</span>
+          <span>{getHourAndMinuteText(props.total_duration)}</span>
         </div>
 
         {getAirpotInfo(props.flights[props.flights.length - 1].arrival_airport)}
@@ -49,13 +49,6 @@ export default function FlightRow(props: FlightSearchInfo) {
         <span className="text-lg font-bold">{ props.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(props.price) : 'Unknown' }</span>
         <Button variant="link" className="text-blue-600">Flight Details</Button>
       </section>
-      {/* {
-        isOpen && (
-          <section>
-            
-          </section>
-        )
-      } */}
     </Card>
   )
 
@@ -64,9 +57,9 @@ export default function FlightRow(props: FlightSearchInfo) {
 function getAirpotInfo(airport: AirportDepartArrival) {
   return (
     <>
-      <div className="grid gap-0 justify-items-center">
-        <span className="text-xs">{airport.id} {airport.name}</span>
-        <span className="text-lg font-bold">{airport.time.split(' ')[1]}</span>
+      <div className="header-value-container">
+        <span>{airport.id} {airport.name}</span>
+        <span>{airport.time.split(' ')[1]}</span>
       </div>
     </>
   )

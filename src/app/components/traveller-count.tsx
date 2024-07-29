@@ -1,11 +1,11 @@
-export interface NumberProps {
+export interface TravellerCountProps {
   value: number;
   setValue: (value: number) => void; 
   startRange?: number;
   endRange?: number;
 }
 
-export default function NumberComponent({ value, setValue, startRange, endRange }: NumberProps) {
+export default function TravellerCount({ value, setValue, startRange, endRange }: TravellerCountProps) {
   const disableDecrement = startRange !== undefined ? value <= startRange : false;
   const disabeIncrement = endRange !== undefined ? value >= endRange : false;
   

@@ -2,7 +2,7 @@ import { PopoverContent } from "@radix-ui/react-popover";
 import { Button } from "../../components/ui/button";
 import { Popover, PopoverTrigger } from "../../components/ui/popover";
 import { Card } from "../../components/ui/card";
-import NumberComponent from "./number";
+import TravellerCount from "./traveller-count";
 import { FlightTravellersParameters, TravelClass } from "../models/flight-parameters";
 
 interface TravellerLabelProps {
@@ -44,15 +44,15 @@ export default function Travellers({ setInfo, ...params }: TravellersProps) {
           <section className="grid grid-cols-3 justify-items-center">
             <div className="flex flex-col gap-3 justify-items-center">
               <TravellerLabel primary="Adults" secondary="(Aged 12+ yrs)"></TravellerLabel>
-              <NumberComponent value={params.adults ?? 0} startRange={1} setValue={setAdults}></NumberComponent>
+              <TravellerCount value={params.adults ?? 0} startRange={1} setValue={setAdults}></TravellerCount>
             </div>
             <div className="flex flex-col gap-3 justify-items-center">
               <TravellerLabel primary="Children" secondary="(Aged 2-12 yrs)"></TravellerLabel>
-              <NumberComponent value={params.childCount ?? 0} startRange={0} setValue={setChildren}></NumberComponent>
+              <TravellerCount value={params.childCount ?? 0} startRange={0} setValue={setChildren}></TravellerCount>
             </div>
             <div className="flex flex-col gap-3 justify-items-center">
               <TravellerLabel primary="Infants" secondary="(Below 2 yrs)"></TravellerLabel>
-              <NumberComponent value={params.infants ?? 0} startRange={0} setValue={setInfants}></NumberComponent>
+              <TravellerCount value={params.infants ?? 0} startRange={0} setValue={setInfants}></TravellerCount>
             </div>
           </section>
           <section className="grid grid-cols-1 gap-3 justify-items-center">
