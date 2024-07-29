@@ -43,8 +43,8 @@ export interface FlightInfo {
   airline: string;
   airline_logo: string;
   airplane: string;
-  arrival_airport: AirportInfo;
-  departure_airport: AirportInfo;
+  arrival_airport: AirportDepartArrival;
+  departure_airport: AirportDepartArrival;
   duration: number;
   flight_number: string;
   legroom: string;
