@@ -33,7 +33,6 @@ export default function Combobox<T>({items, label, value, setValue}: ComboboxPro
           role="combobox"
           aria-expanded={open}
           className="grid grid-cols-[max-content_1fr] gap-1 justify-start">
-            <span>{label ?? ''}:</span>
             {value ? items.find((x) => x.value === value)?.label : "Select value..."}
         </Button>
       </PopoverTrigger>

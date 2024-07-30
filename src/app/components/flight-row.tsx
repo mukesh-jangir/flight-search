@@ -2,6 +2,7 @@ import { AirportDepartArrival, FlightInfo, FlightSearchInfo } from "../models/fl
 import { Card } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import './flight-row.css';
+import Currency from "./currency";
 
 export default function FlightRow(props: FlightSearchInfo) {
   const airlines = props.flights.map(x => x.airline);
@@ -46,7 +47,7 @@ export default function FlightRow(props: FlightSearchInfo) {
 
         {getAirpotInfo(props.flights[props.flights.length - 1].arrival_airport)}
 
-        <span className="text-lg font-bold">{ props.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(props.price) : 'Unknown' }</span>
+        <Currency className="text-lg font-bold" amount={props.price} fallbackValue="Unknown"></Currency>
         <Button variant="link" className="text-blue-600">Flight Details</Button>
       </section>
     </Card>

@@ -81,3 +81,26 @@ export interface FlightsStateProps {
   setTravellersIfo: (value: FlightTravellersParameters) => void,
   fetchFlights: () => void
 }
+
+export enum SortBy {
+  Departure,
+  Duration,
+  Arrival,
+  Price
+}
+
+export interface SortParameters {
+  sortBy?: SortBy,
+  ascending?: boolean;
+}
+
+export enum Stops {
+  NonStop = "Non-Stop",
+  OneStop = "1 Stop",
+  MultipleStops = "2+ Stops"
+}
+
+export interface AdditionalFilters {
+  stops?: Stops,
+  priceRange?: number[]
+}

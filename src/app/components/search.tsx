@@ -43,15 +43,31 @@ export default function Search({ route }: { route?: string  }) {
           <label htmlFor="round-trip">Round Trip</label>
         </div>
       </RadioGroup>
-      <Combobox<string> label="From" items={items} setValue={setFrom} value={parameters.from}></Combobox>
-      <Combobox<string> label="To" items={items} setValue={setTo} value={parameters.to}></Combobox>
-      <DatePicker setDate={setDepartureDate} date={parameters.departureDate}></DatePicker>
-      <DatePicker isDisabled={parameters.travelType === TravelType.OneWay} setDate={setReturnDate} date={parameters.returnDate}></DatePicker>
-      <Travellers setInfo={setTravellersIfo}
-        adults={parameters.adults}
-        childCount={parameters.childCount}
-        infants={parameters.infants}
-        travelClass={parameters.travelClass}></Travellers>
+      <div className="flex flex-col">
+        <span className="text-xs font-semibold">From</span>
+        <Combobox<string> items={items} setValue={setFrom} value={parameters.from}></Combobox>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-xs font-semibold">To</span>
+        <Combobox<string> items={items} setValue={setTo} value={parameters.to}></Combobox>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-xs font-semibold">Departure</span>
+        <DatePicker setDate={setDepartureDate} date={parameters.departureDate}></DatePicker>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-xs font-semibold">Return</span>
+        <DatePicker isDisabled={parameters.travelType === TravelType.OneWay} setDate={setReturnDate} date={parameters.returnDate}></DatePicker>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-xs font-semibold">Travellers</span>
+        <Travellers setInfo={setTravellersIfo}
+          adults={parameters.adults}
+          childCount={parameters.childCount}
+          infants={parameters.infants}
+          travelClass={parameters.travelClass}></Travellers>
+      </div>
+      
       <Button variant="outline"
         disabled={disableSearchButton}
         size="lg"
