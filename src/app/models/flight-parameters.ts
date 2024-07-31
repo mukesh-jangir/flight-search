@@ -12,6 +12,13 @@ export enum TravelClass {
   First = '4'
 }
 
+export enum TravelClassNames {
+  Economy = 'Economy',
+  PremiumEconomy = 'Premium Economy',
+  Business = 'Business',
+  First = 'First'
+}
+
 export interface FlightTravellersParameters {
   adults?: number;
   childCount?: number;
@@ -73,13 +80,8 @@ export interface FlightsStateProps {
   isLoading: boolean;
   parameters: FlightParameters;
   flights: FlightSearchInfo[],
-  setFrom: (value: string) => void,
-  setTo: (value: string) => void,
-  setDepartureDate: (value: Date) => void,
-  setReturnDate: (value: Date) => void,
-  setTravelType: (value: TravelType) => void,
-  setTravellersIfo: (value: FlightTravellersParameters) => void,
-  fetchFlights: () => void
+  fetchFlights: () => void,
+  setFlightParameters: (data: Partial<FlightParameters>) => void;
 }
 
 export enum SortBy {

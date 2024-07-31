@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/button";
 import { Popover, PopoverTrigger } from "../../components/ui/popover";
 import { Card } from "../../components/ui/card";
 import TravellerCount from "./traveller-count";
-import { FlightTravellersParameters, TravelClass } from "../models/flight-parameters";
+import { FlightTravellersParameters, TravelClass, TravelClassNames } from "../models/flight-parameters";
 
 interface TravellerLabelProps {
   primary: string;
@@ -84,10 +84,10 @@ function getTravellersText(info: FlightTravellersParameters): string {
 
 function getTravellerClassText(travelClass?: TravelClass): string {
   switch (travelClass) {
-    case TravelClass.Business: return 'Business';
-    case TravelClass.PremiumEconomy: return 'Premium Economy';
-    case TravelClass.Economy: return 'Economy';
-    case TravelClass.First: return 'First';
+    case TravelClass.Business: return TravelClassNames.Business;
+    case TravelClass.PremiumEconomy: return TravelClassNames.PremiumEconomy;
+    case TravelClass.Economy: return TravelClassNames.Economy;
+    case TravelClass.First: return TravelClassNames.First;
     default: return '';
   }
 }

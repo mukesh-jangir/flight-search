@@ -1,11 +1,11 @@
 "use client"
-import { DropdownItem } from "../models/dropdown-item"
 import { useState } from "react"
+import { Check } from "lucide-react"
+import { cn } from "../../lib/utils"
+import { DropdownItem } from "../models/dropdown-item"
 import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover"
 import { Button } from "../../components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../../components/ui/command"
-import { Check } from "lucide-react"
-import { cn } from "../../lib/utils"
 
 export interface ComboboxProps<T> {
   items: DropdownItem<T>[];
@@ -45,7 +45,7 @@ export default function Combobox<T>({items, label, value, setValue}: ComboboxPro
               {
                 items.map(x => (
                   <CommandItem
-                    key={x.value?.toString()} // TODO this is something to consider and fix later
+                    key={x.value?.toString()}
                     keywords={[x.label]}
                     onSelect={(_event) => {
                       onValueChage(x.value);

@@ -1,6 +1,6 @@
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import { Button } from "../../components/ui/button";
 import { SortBy, SortParameters } from "../models/flight-parameters";
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 
 interface FlightSortByProps extends SortParameters {
   setSortByParams: (params: SortParameters) => void;

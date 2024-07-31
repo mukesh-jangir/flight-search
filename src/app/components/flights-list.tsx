@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { FlightsContext } from "../contexts/flights-context"
 import { Skeleton } from "../../components/ui/skeleton";
 import FlightRow from "./flight-row";
@@ -20,7 +20,7 @@ export default function FlightsList() {
     ))
   }
 
-  const flightsWithPrice = flights.filter(x => x.price !== undefined).map(x => x.price);
+  const flightsWithPrice = getFlightsWithPrice(flights).map(x => x.price);
   const minPrice = flights.length > 0 ? Math.min(...flightsWithPrice) : undefined;
   const maxPrice = flights.length > 0 ? Math.max(...flightsWithPrice) : undefined;
   const filteredAndSortedFlights = sortFlights(getFilteredFlights(flights.slice(), additionalFilters), sortBy);
@@ -72,31 +72,48 @@ function sortFlights(flights: FlightSearchInfo[], sortParameters: SortParameters
     return (parseInt(hoursAndMinSplit[0])*60) + parseInt(hoursAndMinSplit[1]);
   }
 
+  const sortOrder: SortOrder = sortParameters.ascending ? 'Asc' : 'Desc';
+
   switch (sortParameters.sortBy) {
     case SortBy.Price:
-      const flightsWithoutPrice = flights.filter(x => x.price === undefined);
-      const flightsWithPrice = flights.filter(x => x.price !== undefined);
-      return flightsWithPrice
-        .sort((a, b) => sortParameters.ascending ? a.price - b.price : b.price - a.price)
-        .concat(flightsWithoutPrice);
+      return sortBy(getFlightsWithPrice(flights), 'price', sortOrder)
+        .concat(getFlightsWithoutPrice(flights));
 
     case SortBy.Duration:
-      return flights.sort((a, b) => sortParameters.ascending ? a.total_duration - b.total_duration: b.total_duration - a.total_duration);
+      return sortBy(flights, 'total_duration', sortOrder);
     
     case SortBy.Departure:
       // the departure time is to be considered only for the first flight
-      return flights.sort((a, b) => sortParameters.ascending ?
-        getArrivalDepartureMinutes(a.flights[0].departure_airport.time) -  getArrivalDepartureMinutes(b.flights[0].departure_airport.time) :
-        getArrivalDepartureMinutes(b.flights[0].departure_airport.time) -  getArrivalDepartureMinutes(a.flights[0].departure_airport.time)
-      );
+      return sortBy(
+        flights,
+        (x) => getArrivalDepartureMinutes(x.flights[0].departure_airport.time),
+        sortOrder);
 
     case SortBy.Arrival:
       // arrival time is to be considered for the last flight
-      return flights.sort((a, b) => sortParameters.ascending ?
-        getArrivalDepartureMinutes(a.flights[a.flights.length - 1].arrival_airport.time) -  getArrivalDepartureMinutes(b.flights[b.flights.length - 1].arrival_airport.time) :
-        getArrivalDepartureMinutes(b.flights[b.flights.length - 1].arrival_airport.time) -  getArrivalDepartureMinutes(a.flights[a.flights.length - 1].arrival_airport.time)
-      );
+      return sortBy(
+        flights,
+        (x) => getArrivalDepartureMinutes(x.flights[x.flights.length - 1].arrival_airport.time),
+        sortOrder);
   
     default: return flights;
   }
+}
+
+function getFlightsWithoutPrice(flights: FlightSearchInfo[]): FlightSearchInfo[] {
+  return flights.filter(x => x.price === undefined);
+}
+
+function getFlightsWithPrice(flights: FlightSearchInfo[]): FlightSearchInfo[] {
+  return flights.filter(x => x.price !== undefined);
+}
+
+type SortOrder = 'Asc' | 'Desc'
+
+function sortBy<T>(items: Array<T>, by: keyof T | ((item: T) => number), sortIn: SortOrder = 'Asc'): T[] {
+  const sortFn = (a: number, b: number) => sortIn === 'Asc' ? a - b : b - a;
+  const isFunction = typeof by === 'function';
+  return isFunction ?
+    items.sort((a, b) => sortFn(by(a), by(b))) :
+    items.sort((a, b) => sortFn(a[by] as number, b[by] as number));
 }
