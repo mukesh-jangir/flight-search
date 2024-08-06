@@ -6,7 +6,7 @@ export interface CurrencyProps {
 
 export default function Currency({ className, amount, fallbackValue = '' }: CurrencyProps) {
     const currencyText = amount ? getAmountInINR(amount) : fallbackValue;
-    return <span className={className}>{currencyText}</span>;
+    return <span data-testid="currency-text" className={className}>{currencyText}</span>;
 }
 
 export function getAmountInINR(amount: number): string {

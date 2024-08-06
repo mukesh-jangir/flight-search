@@ -4,6 +4,9 @@ import FlightsList from "./flights-list";
 import { FlightsContext } from "../../contexts/flights-context";
 import * as Filters from "../filters/filters";
 import { FlightSortBy, FlightSortByProps } from "../sort-by/sort-by";
+import { getFilterTestData, getSortingTestData } from "./flights-list.testdata";
+
+const getAirlineLogo = (flight: { airline_logo: string}) => flight.airline_logo;
 
 jest.mock('../filters/filters', () => ({
   __esModule: true,
@@ -12,7 +15,7 @@ jest.mock('../filters/filters', () => ({
 
 jest.mock('./flight-row/flight-row', () => ({
   __esModule: true,
-  FlightRow: (flight: FlightSearchInfo) => <div className="row">{flight.airline_logo}</div>
+  FlightRow: (flight: FlightSearchInfo) => <div className="row">{getAirlineLogo(flight)}</div>
 }));
 
 jest.mock('../../../components/ui/skeleton', () => ({
@@ -40,37 +43,11 @@ describe(FlightsList.name, () => {
   });
   describe('Sorting', () => {
     let contextValue: FlightsStateProps, container: HTMLElement;
+    const sortedData = getSortingTestData();
     beforeEach(() => {
       contextValue = {
         ...contextMock,
-        flights: [
-          {
-            airline_logo: 'A',
-            flights: [
-              { departure_airport: { time: 'date 21:30' } },
-              {  },
-              { arrival_airport: { time: 'date 04:20' } }
-            ] as any,
-            price: 20, total_duration: 30
-          } as FlightSearchInfo,
-          {
-            airline_logo: 'B',
-            flights: [
-              { departure_airport: { time: 'date 20:30' } },
-              { arrival_airport: { time: 'date 07:20' } }
-            ] as any,
-            price: 10, total_duration: 20
-          } as FlightSearchInfo,
-          {
-            airline_logo: 'C',
-            flights: [
-              {
-                departure_airport: { time: 'date 04:20' },
-                arrival_airport: { time: 'date 21:30' }
-              }
-            ] as any,
-            price: 30, total_duration: 10 } as FlightSearchInfo
-        ]
+        flights: sortedData.initialData as FlightSearchInfo[]
       };
 
       (FlightSortBy as any)= ({ setSortByParams,  ascending }: FlightSortByProps) => (
@@ -92,7 +69,8 @@ describe(FlightsList.name, () => {
     })
     it('should retain the order if there is no sortBy value set', () => {
       const rows = container.querySelectorAll('.row');
-      expect(Array.from(rows).map(x => x.textContent)).toEqual(['A', 'B', 'C']);
+      expect(Array.from(rows).map(x => x.textContent))
+        .toEqual(sortedData.initialData.map(getAirlineLogo as any));
     });
 
     describe('By Departure', () => {
@@ -101,7 +79,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['C', 'B', 'A']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.departureAsc.map(getAirlineLogo as any));
       });
 
       it('should sort by departure time in descending if ascending is false', () => {
@@ -110,7 +89,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['A', 'B', 'C']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.departureDesc.map(getAirlineLogo as any));
       });
     });
 
@@ -120,7 +100,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['A', 'B', 'C']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.arrivalAsc.map(getAirlineLogo as any));
       });
 
       it('should sort by arrival time in descending if ascending is false', () => {
@@ -129,7 +110,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['C', 'B', 'A']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.arrivalDesc.map(getAirlineLogo as any));
       });
     });
 
@@ -139,7 +121,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['C', 'B', 'A']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.durationAsc.map(getAirlineLogo as any));
       });
 
       it('should sort by duration time in descending if ascending is false', () => {
@@ -148,7 +131,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['A', 'B', 'C']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.durationDesc.map(getAirlineLogo as any));
       });
     });
 
@@ -158,7 +142,8 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['B', 'A', 'C']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.priceAsc.map(getAirlineLogo as any));
       });
 
       it('should sort by price in descending if ascending is false', () => {
@@ -167,26 +152,24 @@ describe(FlightsList.name, () => {
         fireEvent.click(element);
 
         const rows = container.querySelectorAll('.row');
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['C', 'A', 'B']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(sortedData.priceDesc.map(getAirlineLogo as any));
       });
     });
   });
 
   describe('Filtering', () => {
     let contextValue: FlightsStateProps, container: HTMLElement;
+    const filteredData = getFilterTestData();
     beforeEach(() => {
       contextValue = {
         ...contextMock,
-        flights: [
-          { airline_logo: 'A', flights: [1, 2, 3] as any, price: 10 } as FlightSearchInfo,
-          { airline_logo: 'B', flights: [1, 2] as any, price: 20 } as FlightSearchInfo,
-          { airline_logo: 'C', flights: [1] as any, price: 30 } as FlightSearchInfo
-        ]
+        flights: filteredData.initialData as FlightSearchInfo[]
       };
 
       (Filters.default as any)= ({ setFilters, ...props }: Filters.FiltersProps) => (
         <>
-        <button onClick={() => setFilters({ priceRange: { min: 20, max: 100 } })}>Price Filter</button>;
+        <button onClick={() => setFilters({ priceRange: { min: filteredData.byPrice.testPrice, max: 100 } })}>Price Filter</button>;
         <button onClick={() => setFilters({ stops: Stops.NonStop })}>{Stops.NonStop}</button>;
         <button onClick={() => setFilters({ stops: Stops.OneStop })}>{Stops.OneStop}</button>;
         <button onClick={() => setFilters({ stops: Stops.MultipleStops })}>{Stops.MultipleStops}</button>;
@@ -203,7 +186,7 @@ describe(FlightsList.name, () => {
     })
     it('should show all results if filtering is not applied', () => {
       const rows = container.querySelectorAll('.row');
-      expect(Array.from(rows).map(x => x.textContent)).toEqual(['A', 'B', 'C']);
+      expect(Array.from(rows).map(x => x.textContent)).toEqual(filteredData.initialData.map(getAirlineLogo as any));
     });
 
     describe('By Stops', () => {
@@ -213,7 +196,8 @@ describe(FlightsList.name, () => {
 
         const rows = container.querySelectorAll('.row');
         expect(rows.length).toBe(1);
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['C']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(filteredData.byNonStop.map(getAirlineLogo as any));
       });
 
       it('should show only flights with exactly one stop if One Stop filter is applied', () => {
@@ -222,7 +206,8 @@ describe(FlightsList.name, () => {
 
         const rows = container.querySelectorAll('.row');
         expect(rows.length).toBe(1);
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['B']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(filteredData.byOneStop.map(getAirlineLogo as any));
       });
 
       it('should show only flights that have more than one stops if multi stops filter is applied', () => {
@@ -231,7 +216,8 @@ describe(FlightsList.name, () => {
 
         const rows = container.querySelectorAll('.row');
         expect(rows.length).toBe(1);
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['A']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(filteredData.byMultiStop.map(getAirlineLogo as any));
       });
     });
 
@@ -242,7 +228,8 @@ describe(FlightsList.name, () => {
 
         const rows = container.querySelectorAll('.row');
         expect(rows.length).toBe(2);
-        expect(Array.from(rows).map(x => x.textContent)).toEqual(['B', 'C']);
+        expect(Array.from(rows).map(x => x.textContent))
+          .toEqual(filteredData.byPrice.filteredData.map(getAirlineLogo as any));
       });
     });
   });

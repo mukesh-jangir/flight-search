@@ -42,13 +42,13 @@ describe(FlightSortBy.name, () => {
   });
 
   it('should render button corresponding to all possible sort options', () => {
+    const sortByOptions = Object.values(SortBy);
     render(<FlightSortBy {...props}></FlightSortBy>);
 
-    // don't have to use expect for these since getBy throws error unless there is specifically one matching element
-    screen.getByRole('button', { name: /duration/i });
-    screen.getByRole('button', { name: /departure/i });
-    screen.getByRole('button', { name: /arrival/i });
-    screen.getByRole('button', { name: /price/i });
+    const buttons = screen.getAllByRole('button');
+
+    expect(buttons.length).toBe(sortByOptions.length);
+    expect(buttons.map(x => x.textContent)).toEqual(sortByOptions.map(x => `${x} `));
   });
 
   Object.values(SortBy).forEach(item => {
@@ -65,9 +65,10 @@ describe(FlightSortBy.name, () => {
         };
         render(<FlightSortBy {...propsToSet}></FlightSortBy>);
 
-        screen.getByRole('button', {
-          name: `${item} ${ChevronTexts.Up}`
-        });
+        const buttons = screen.getAllByRole('button');
+        const buttonToTest = buttons.find(x => x.textContent?.includes(item));
+        expect(buttonToTest).toBeDefined();
+        expect(buttonToTest?.textContent).toBe(`${item} ${ChevronTexts.Up}`);
       });
 
       it(`should show chevron down icon if sortBy value is ${item} and sortOrder is descending`, () => {
@@ -78,9 +79,10 @@ describe(FlightSortBy.name, () => {
         };
         render(<FlightSortBy {...propsToSet}></FlightSortBy>);
 
-        screen.getByRole('button', {
-          name: `${item} ${ChevronTexts.Down}`
-        });
+        const buttons = screen.getAllByRole('button');
+        const buttonToTest = buttons.find(x => x.textContent?.includes(item));
+        expect(buttonToTest).toBeDefined();
+        expect(buttonToTest?.textContent).toBe(`${item} ${ChevronTexts.Down}`);
       });
 
       it(`should toggle the sortOrder to descending, if initially the sortby value is ${item} and sort order is ascending,
