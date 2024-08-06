@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DropdownItem } from "../models/dropdown-item";
 import { FlightParameters, FlightSearchInfo, FlightsStateProps, FlightTravellersParameters, TravelType } from "../models/flight-parameters";
 import { getFlights } from "../services/flights-search-service";
-import getAirportCodes from "../services/get-airport-codes";
+import { getAirportCodes } from "../services/get-airport-codes";
 
 export default function useFlightsState(): FlightsStateProps {
   const [items, setItems] = useState<DropdownItem<string>[]>([]);
