@@ -16,7 +16,7 @@ export interface DatePickerProps {
   isDisabled?: boolean;
 }
 
-export default function DatePicker({ date, setDate, isDisabled }: DatePickerProps) {
+export function DatePicker({ date, setDate, isDisabled }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild disabled={isDisabled}>

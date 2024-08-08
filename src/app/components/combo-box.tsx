@@ -14,7 +14,7 @@ export interface ComboboxProps<T> {
   label?: string;
 }
 
-export default function Combobox<T>({items, label, value, setValue}: ComboboxProps<T>) {
+export function Combobox<T>({items, label, value, setValue}: ComboboxProps<T>) {
   const [open, setOpen] = useState(false);
 
   const onValueChage = (changedValue: T) => {

@@ -1,10 +1,10 @@
-import { AirportDepartArrival, FlightInfo, FlightSearchInfo } from "../models/flight-parameters";
-import { Card } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
+import { AirportDepartArrival, FlightInfo, FlightSearchInfo } from "../../../models/flight-parameters";
+import { Card } from "../../../../components/ui/card";
+import { Button } from "../../../../components/ui/button";
 import './flight-row.css';
-import Currency from "./currency";
+import Currency from "../../currency/currency";
 
-export default function FlightRow(props: FlightSearchInfo) {
+export function FlightRow(props: FlightSearchInfo) {
   const airlines = props.flights.map(x => x.airline);
   const uniqueAirlines = Array.from(new Set(airlines));
   const isMultiAirline = uniqueAirlines.length > 1;
@@ -52,7 +52,6 @@ export default function FlightRow(props: FlightSearchInfo) {
       </section>
     </Card>
   )
-
 }
 
 function getAirpotInfo(airport: AirportDepartArrival) {

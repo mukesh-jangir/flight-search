@@ -76,7 +76,7 @@ export interface FlightSearchResponse {
 }
 
 export interface FlightsStateProps {
-  items: DropdownItem<string>[];
+  airports: DropdownItem<string>[];
   isLoading: boolean;
   parameters: FlightParameters;
   flights: FlightSearchInfo[],
@@ -85,10 +85,10 @@ export interface FlightsStateProps {
 }
 
 export enum SortBy {
-  Departure,
-  Duration,
-  Arrival,
-  Price
+  Departure = 'Departure',
+  Duration = 'Duration',
+  Arrival = 'Arrival',
+  Price = 'Price'
 }
 
 export interface SortParameters {
@@ -102,7 +102,12 @@ export enum Stops {
   MultipleStops = "2+ Stops"
 }
 
+export interface PriceRange {
+  min: number;
+  max: number;
+}
+
 export interface AdditionalFilters {
-  stops?: Stops,
-  priceRange?: number[]
+  stops?: Stops;
+  priceRange?: PriceRange;
 }
