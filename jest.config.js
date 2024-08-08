@@ -4,5 +4,8 @@ module.exports = {
   preset: "ts-jest",
   transform: {
     "^.+.tsx?$": ["ts-jest",{}],
+  },
+  moduleNameMapper: {
+    '^.+\\.(css|less)$': '<rootDir>/src/cssstub.ts'
   }
 };

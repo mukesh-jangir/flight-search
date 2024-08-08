@@ -9,8 +9,6 @@ enum MockedComponentTestIds {
   PriceRangeFilterProps = 'price-range-filter'
 }
 
-jest.mock('./filters.css', () => {});
-
 jest.mock('../../../components/ui/card', () => ({
   Card: ({ children }: any) => <div>{...children}</div>
 }));
